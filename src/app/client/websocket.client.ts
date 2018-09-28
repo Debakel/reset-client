@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 export class WebSocketClient {
   onMessage: Observable<MessageEvent>;
   onOpen: Observable<any>; // TODO: Add type
-  onClose: Observable<any>; // TODO: Add type
+  onClose: Observable<CloseEvent>;
   onError: Observable<any>; // TODO: Add type
 
   private socket: WebSocket;
