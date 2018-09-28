@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ResetClient} from '../client/reset.client';
+import {ResetClient} from '../../client/reset.client';
 
 @Component({
   selector: 'app-test-client',
