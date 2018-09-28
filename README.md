@@ -1,5 +1,7 @@
 # ResetClient
 
+![Reset Client Logo](https://raw.githubusercontent.com/Debakel/reset-client/e5c6cde55362e8deb0f5c905becc42eb681905c6/src/assets/title.png)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
 
 ## Development server
