@@ -1,6 +1,6 @@
 import {ICommand, JoinCommand, LeaveCommand, StartGameCommand} from './commands';
 import {WebSocketClient} from './websocket.client';
-import {EventEmitter} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {
   ActionTypeModel,
   PlayerModel,
@@ -10,7 +10,11 @@ import {
   UnitModel,
   UnitTypeModel
 } from './models';
+import {environment} from '../../environments/environment';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ResetClient {
   public socket: WebSocketClient; // TODO: Set private
 
@@ -19,12 +23,12 @@ export class ResetClient {
   public eventPlayerJoin: EventEmitter<PlayerModel> = new EventEmitter<PlayerModel>();
   public eventUnitCreate: EventEmitter<UnitModel> = new EventEmitter<UnitModel>();
   public infoUnitType: EventEmitter<UnitTypeModel> = new EventEmitter<UnitTypeModel>();
-  public infoTerrainType: EventEmitter<InfoTerrainType> = new EventEmitter<InfoTerrainType>();
+  public infoTerrainType: EventEmitter<TerrainTypeModel> = new EventEmitter<TerrainTypeModel>();
   public infoRessourceType: EventEmitter<ResourceTypeModel> = new EventEmitter<ResourceTypeModel>();
   public infoActionType: EventEmitter<ActionTypeModel> = new EventEmitter<ActionTypeModel>();
 
-  constructor(socketUrl: string) {
-    this.socket = new WebSocketClient(socketUrl);
+  constructor() {
+    this.socket = new WebSocketClient(environment.socketUrl);
     this.socket.onOpen.subscribe(event => this.eventConnected.emit());
     this.socket.onMessage.subscribe(message => this.parseMessage(message.data));
   }

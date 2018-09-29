@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as PIXI from 'pixi.js/dist/pixi.js';
-import {WebSocketClient} from '../client/websocket.client';
+import {ResetClient} from '../client/reset.client';
 
 @Component({
   selector: 'app-game-area',
@@ -9,7 +9,7 @@ import {WebSocketClient} from '../client/websocket.client';
 })
 export class GameAreaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private client: ResetClient) { }
 
   ngOnInit() {
     console.log('hello world on init');
@@ -32,15 +32,17 @@ export class GameAreaComponent implements OnInit {
       // This creates a texture from a 'bunny.png' image
       const bunny = new PIXI.Sprite(resources.bunny.texture);
 
-      const client = new WebSocketClient('ws://127.0.0.1:8080');
       const mytext = new PIXI.Text('This is a PixiJS text',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
       mytext.setText('connecting?');
       mytext.x = 30;
       mytext.y = 30;
-      client.onOpen.subscribe(data => log('Successfully connected to server.'));
-      client.onClose.subscribe(data => log('Connection closed. ' + data));
-      client.onMessage.subscribe(data => handle(data.data));
-      client.onError.subscribe(error => log('Error: ' + error));
+      this.client.socket.onOpen.subscribe(data => log('Successfully connected to server.'));
+      this.client.socket.onClose.subscribe(data => log('Connection closed. ' + data));
+      this.client.socket.onMessage.subscribe(data => handle(data.data));
+      this.client.socket.onError.subscribe(error => log('Error: ' + error));
+
+      this.client.eventPlayerJoin.subscribe(event => log('Player ' + event.name + ' joined'));
+
       function log(message) {
         console.log(message);
         mytext.setText(message);

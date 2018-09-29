@@ -7,20 +7,13 @@ import {ResetClient} from '../../client/reset.client';
   styleUrls: ['./test-client.component.css']
 })
 export class TestClientComponent implements OnInit {
-
-  socketUrl = 'ws://127.0.0.1:8081';
+  constructor(private resetClient: ResetClient) {}
   message = '';
-  resetClient: ResetClient;
   playerName = 'Tom';
 
   serverLog = [];
 
   ngOnInit() {
-
-  }
-
-  connect() {
-    this.resetClient = new ResetClient(this.socketUrl);
     this.resetClient.eventPlayerJoin.subscribe(player => this.log('Player ' + player.name + ' joined.'));
     this.resetClient.eventUnitCreate.subscribe(unit => this.log('Unit created for Player: ' + unit.playerId));
     this.resetClient.infoUnitType.subscribe(info => this.log('Received infoUnitType: ') + info);
@@ -30,6 +23,7 @@ export class TestClientComponent implements OnInit {
     // this.resetClient.socket.onMessage.subscribe(data => this.log('Received message: ' + data.data));
     this.resetClient.socket.onError.subscribe(error => this.log('Error: ' + error));
   }
+
 
   send() {
     this.resetClient.sendRawMessage(this.message);
