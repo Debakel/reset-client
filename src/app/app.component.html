@@ -1,23 +1,2 @@
-<app-game-area></app-game-area>
-<input [(ngModel)]="socketUrl" placeholder="ws://localhost:8081">
-<button (click)="connect()">
-  Connect
-</button>
-
-<br>
-<br>
-
-<input [(ngModel)]="message" placeholder="name">
-<button (click)="send()">Send message</button>
-
-<br>
-<br>
-
-<div>
-  <b>Log:</b>
-  <ul>
-    <li *ngFor="let item of serverLog">
-      {{item}}
-    </li>
-  </ul>
-</div>
+<h1>RESET</h1>
+<app-test-client></app-test-client>
