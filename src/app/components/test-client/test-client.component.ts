@@ -21,14 +21,16 @@ export class TestClientComponent implements OnInit {
 
   connect() {
     this.resetClient = new ResetClient(this.socketUrl);
+    this.resetClient.eventPlayerJoin.subscribe(player => this.log('Player ' + player.name + ' joined.'));
+    this.resetClient.eventUnitCreate.subscribe(unit => this.log('Unit created for Player: ' + unit.playerId));
+    this.resetClient.infoUnitType.subscribe(info => this.log('Received infoUnitType: ') + info);
     this.resetClient.socket.onOpen.subscribe(data => this.log('Successfully connected to server.'));
     this.resetClient.socket.onClose.subscribe(data => this.log('Connection closed.'));
-    this.resetClient.socket.onMessage.subscribe(data => this.log('Received message: ' + data.data));
+    // this.resetClient.socket.onMessage.subscribe(data => this.log('Received message: ' + data.data));
     this.resetClient.socket.onError.subscribe(error => this.log('Error: ' + error));
   }
 
   send() {
-    this.log('Send message: ' + this.message);
     this.resetClient.sendRawMessage(this.message);
   }
 
