@@ -24,6 +24,7 @@ export class TestClientComponent implements OnInit {
     this.resetClient.eventPlayerJoin.subscribe(player => this.log('Player ' + player.name + ' joined.'));
     this.resetClient.eventUnitCreate.subscribe(unit => this.log('Unit created for Player: ' + unit.playerId));
     this.resetClient.infoUnitType.subscribe(info => this.log('Received infoUnitType: ') + info);
+    this.resetClient.eventGameStart.subscribe(event => this.log('Game starts'));
     this.resetClient.socket.onOpen.subscribe(data => this.log('Successfully connected to server.'));
     this.resetClient.socket.onClose.subscribe(data => this.log('Connection closed.'));
     // this.resetClient.socket.onMessage.subscribe(data => this.log('Received message: ' + data.data));

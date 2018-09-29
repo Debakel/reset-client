@@ -1,15 +1,27 @@
 import {ICommand, JoinCommand, LeaveCommand, StartGameCommand} from './commands';
 import {WebSocketClient} from './websocket.client';
 import {EventEmitter} from '@angular/core';
-import {PlayerModel, Store, UnitModel, UnitTypeModel} from './models';
+import {
+  ActionTypeModel,
+  PlayerModel,
+  ResourceTypeModel,
+  Store,
+  TerrainTypeModel,
+  UnitModel,
+  UnitTypeModel
+} from './models';
 
 export class ResetClient {
   public socket: WebSocketClient; // TODO: Set private
 
   public eventConnected: EventEmitter<null> = new EventEmitter();
+  public eventGameStart: EventEmitter<null> = new EventEmitter();
   public eventPlayerJoin: EventEmitter<PlayerModel> = new EventEmitter<PlayerModel>();
-  public eventUnitCreate: EventEmitter<UnitModel> = new EventEmitter();
-  public infoUnitType: EventEmitter<UnitTypeModel> = new EventEmitter();
+  public eventUnitCreate: EventEmitter<UnitModel> = new EventEmitter<UnitModel>();
+  public infoUnitType: EventEmitter<UnitTypeModel> = new EventEmitter<UnitTypeModel>();
+  public infoTerrainType: EventEmitter<InfoTerrainType> = new EventEmitter<InfoTerrainType>();
+  public infoRessourceType: EventEmitter<ResourceTypeModel> = new EventEmitter<ResourceTypeModel>();
+  public infoActionType: EventEmitter<ActionTypeModel> = new EventEmitter<ActionTypeModel>();
 
   constructor(socketUrl: string) {
     this.socket = new WebSocketClient(socketUrl);
@@ -55,6 +67,20 @@ export class ResetClient {
         case 'infoUnitType': {
           this.infoUnitType.emit(UnitTypeModel.deserialize(value));
           break;
+        }
+        case 'eventGameStart': {
+          this.eventGameStart.emit();
+          break;
+        }
+        case 'infoTerrainType': {
+          this.infoTerrainType.emit(TerrainTypeModel.deserialize(value));
+          break;
+        }
+        case 'infoResourceType': {
+          this.infoRessourceType.emit(ResourceTypeModel.deserialize(value));
+        }
+        case 'infoActionType': {
+          this.infoActionType.emit(ActionTypeModel.deserialize(value));
         }
         default : {
           console.log('Unknown command: ' + key);
