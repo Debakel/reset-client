@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as PIXI from 'pixi.js/dist/pixi.js';
-import {WebsocketClient} from '../websocket.client';
+import {WebSocketClient} from '../client/websocket.client';
 
 @Component({
   selector: 'app-game-area',
@@ -32,7 +32,7 @@ export class GameAreaComponent implements OnInit {
       // This creates a texture from a 'bunny.png' image
       const bunny = new PIXI.Sprite(resources.bunny.texture);
 
-      const client = new WebsocketClient('ws://127.0.0.1:8080');
+      const client = new WebSocketClient('ws://127.0.0.1:8080');
       const mytext = new PIXI.Text('This is a PixiJS text',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
       mytext.setText('connecting?');
       mytext.x = 30;
@@ -86,7 +86,7 @@ export class GameAreaComponent implements OnInit {
       app.stage.addChild(container);
 
 
-    }
+    });
     // load things
     // wait for and render the initial map
     // apply updates?
